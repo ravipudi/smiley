@@ -51,8 +51,8 @@ class Tracer(object):
         self.canonical_filenames = {}
 
     def _get_interesting_locals(self, frame):
-        return {
-            n: v
+        return dict(
+            (n, v)
             for n, v in frame.f_locals.items()
             # Ignore any modules, methods, or functions that have made
             # their way into the "locals" namespace for this frame.
@@ -60,7 +60,7 @@ class Tracer(object):
                 and not inspect.isfunction(v)
                 and not inspect.ismethod(v)
                 and (n[:2] != '__' and n[-2:] != '__'))
-        }
+        )
 
     def _should_ignore_file(self, filename):
         if not filename:
